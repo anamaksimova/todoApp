@@ -10,6 +10,7 @@ import {
   removeRow,
   setTitle,
   addTaskPage,
+  changeStatus,
 } from './service.js';
 
 export const closeModal = (authOverlay) => {
@@ -64,6 +65,7 @@ export const formControl = (form, list, title) => {
       const newTask = {
         id,
         task: inputName.value,
+        status: 'В процессе',
       };
       setStorage(title, newTask);
       addTaskPage(newTask, list);
@@ -102,6 +104,9 @@ export const tableControl = (list, title) => {
     for (let index = 0; index < btnDones.length; index++) {
       const btnDone = btnDones[index];
       if (target === btnDone) {
+        const rowDone = target.closest('.table-rows').dataset.id;
+        changeStatus(rowDone, title);
+
         const row = target.closest('.table-rows');
         row.classList.remove('table-light');
         row.classList.add('table-success');

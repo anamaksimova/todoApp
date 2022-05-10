@@ -74,10 +74,16 @@ export const createAuthForm = () => {
     authOverlay,
   };
 };
-export const createRow = ({id, task}) => {
+export const createRow = ({id, task, status}) => {
   const tr = document.createElement('tr');
   tr.dataset.id = id;
-  tr.classList.add('table-rows', 'table-light');
+  if (status === 'В процессе') {
+    tr.classList.add('table-rows', 'table-light');
+  }
+  if (status === 'Выполнена') {
+    tr.classList.add('table-rows', 'table-success');
+  }
+
 
   const tdId = document.createElement('td');
   tdId.textContent = document.querySelectorAll('tr').length;
@@ -85,9 +91,13 @@ export const createRow = ({id, task}) => {
   const tdTask = document.createElement('td');
   tdTask.classList.add('task');
   tdTask.textContent = task;
+  if (status === 'Выполнена') {
+    tdTask.classList.add('text-decoration-line-through');
+  }
+
 
   const tdStatus = document.createElement('td');
-  tdStatus.textContent = 'В процессе';
+  tdStatus.textContent = status;
 
   const tdEdit = document.createElement('td');
 

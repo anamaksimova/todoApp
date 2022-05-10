@@ -19,9 +19,19 @@ export const setStorage = (key, task) => {
 export const removeRow = (key, title) => {
   const tasks = getStorage(title);
   for (let i = 0; i < tasks.length; i++) {
-    const {id, task} = tasks[i];
+    const {id, task, status} = tasks[i];
     if (id === key) {
       tasks.splice(i, 1);
+    }
+  }
+  localStorage.setItem(title, JSON.stringify(tasks));
+};
+export const changeStatus = (key, title) => {
+  const tasks = getStorage(title);
+  for (let i = 0; i < tasks.length; i++) {
+    const {id, task, status} = tasks[i];
+    if (id === key) {
+      tasks[i].status = 'Выполнена';
     }
   }
   localStorage.setItem(title, JSON.stringify(tasks));
@@ -33,7 +43,8 @@ export const setTitle = (app, title) => {
 };
 
 export const addTaskPage = (newTask, list) => {
-  const {id, task} = newTask;
-  list.append(createRow({id, task}));
+  let {id, task, status} = newTask;
+  status = 'В процессе';
+  list.append(createRow({id, task, status}));
 };
 
